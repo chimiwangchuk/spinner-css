@@ -7,54 +7,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         :root {
-            --jordy-blue: #09f;
-            --sky-blue: #3cf;
-            --white-variant: #6ff;
+            --width: 100px;
+            --height: 100px;
+            --border: 26px;
+            --duration: 1s;
+            --repetition: infinite;
+            --pink: #ff6699;
+            --red: #ff9966;
+            --orange: #ffcc66;
+            --yellow: #ffff99;
+            --voilet: #cc66cc;
+            --mauve: #cc99cc;
+            --light-yellow: #fffad5;
         }
 
         .loader {
-            animation: spin 1s infinite linear;
-            border: solid 2vmin transparent;
-            border-radius: 50%;
-            border-right-color: var(--jordy-blue);
-            border-top-color: var(--jordy-blue);
-            box-sizing: border-box;
-            height: 20vmin;
-            left: calc(50% - 10vmin);
-            position: fixed;
-            top: calc(50% - 10vmin);
-            width: 20vmin;
-            z-index: 1;
+            display: block;
+            width: var(--width);
+            height: var(--height);
+            position: relative;
+            transform-origin: 63px 63px;
+            animation: spin var(--duration) var(--repetition) linear;
         }
 
-        .loader:before {
-            animation: spin 2s infinite linear;
-            border: solid 2vmin transparent;
+        .spinner {
+            display: block;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
-            border-right-color: var(--sky-blue);
-            border-top-color: var(--sky-blue);
-            box-sizing: border-box;
-            content: "";
-            height: 16vmin;
-            left: 0;
             position: absolute;
             top: 0;
-            width: 16vmin;
+            left: 0;
+            border-width: 0 0 var(--border) var(--border);
+            border-style: solid;
+            border-color: transparent;
         }
 
-        .loader:after {
-            animation: spin 3s infinite linear;
-            border: solid 2vmin transparent;
-            border-radius: 50%;
-            border-right-color: var(--white-variant);
-            border-top-color: var(--white-variant);
-            box-sizing: border-box;
-            content: "";
-            height: 12vmin;
-            left: 2vmin;
-            position: absolute;
-            top: 2vmin;
-            width: 12vmin;
+        .yellow {
+            border-left-color: var(--yellow);
+        }
+
+        .orange {
+            border-left-color: var(--orange);
+            transform: rotate(-45deg);
+        }
+
+        .red {
+            border-left-color: var(--red);
+            transform: rotate(-90deg);
+        }
+
+        .pink {
+            border-left-color: var(--pink);
+            transform: rotate(-135deg);
+        }
+
+        .violet {
+            border-left-color: var(--voilet);
+            transform: rotate(-180deg);
+        }
+
+        .mauve {
+            border-left-color: var(--mauve);
+            transform: rotate(-225deg);
+        }
+
+        .light-yellow {
+            border-left-color: var(--light-yellow);
+            transform: rotate(-270deg);
         }
 
         .container {
@@ -64,16 +84,23 @@
             left: 0;
             width: 100%;
             height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background-color: rgba(0, 0, 0, 0.3);
             z-index: 9999;
 
         }
 
         @keyframes spin {
-            100% {
-                transform: rotate(360deg);
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(-360deg);
             }
         }
+
     </style>
 </head>
 <body>
@@ -88,7 +115,16 @@
     function loading() {
         const node = document.createElement("div");
         node.className = "container";
-        node.innerHTML = `<div class="loader"></div>`;
+        node.innerHTML = `
+                    <div class="loader">
+                        <div class="spinner yellow"></div>
+                        <div class="spinner orange"></div>
+                        <div class="spinner red"></div>
+                        <div class="spinner pink"></div>
+                        <div class="spinner violet"></div>
+                        <div class="spinner mauve"></div>
+                        <div class="spinner light-yellow"></div>
+                    </div>`;
         const container = document.getElementById('container').appendChild(node);
         setTimeout(() => {
             container.remove();
